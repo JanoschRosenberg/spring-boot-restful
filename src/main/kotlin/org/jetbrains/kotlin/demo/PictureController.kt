@@ -89,7 +89,6 @@ class PictureController {
 
     fun getPics(): List<Picture> {
         val url = "https://bitdb.network/q/"
-        val query = Base64.getEncoder().withoutPadding().encodeToString("{ request: {encoding: {b1: 'hex'},'find': {b1: '7e01'}},response: {encoding: {b2: 'hex'}}}".toByteArray())
         val headers = mapOf("key" to "qz89vqmg67zp5ek8h07llug6vcva8y903yylykv4tz")
         val response = khttp.get(
                 url = url + "eyJyZXF1ZXN0Ijp7ImVuY29kaW5nIjp7ImIxIjoiaGV4In0sImZpbmQiOnsiYjEiOiI3ZTAxIn19LCJyZXNwb25zZSI6eyJlbmNvZGluZyI6eyJiMiI6ImhleCJ9fX0",
