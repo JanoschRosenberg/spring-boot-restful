@@ -28,9 +28,6 @@ repositories {
     }
 }
 
-springBoot {
-    executable = true
-}
 
 dependencies {
     compile 'com.google.guava:guava:26.0-jre'
@@ -40,3 +37,5 @@ dependencies {
     implementation 'com.beust:klaxon:3.0.1'
     testCompile('org.springframework.boot:spring-boot-starter-test')
 }
+apply plugin: 'application'
+mainClassName = 'org.jetbrains.kotlin.demo.ApplicationKt'
