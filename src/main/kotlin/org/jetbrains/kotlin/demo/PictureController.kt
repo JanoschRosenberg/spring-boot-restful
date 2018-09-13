@@ -21,15 +21,14 @@ class PictureController {
 
     val counter = AtomicLong()
 
-    val buffer = HashMap<String,ByteArray>()
 
-    @GetMapping(value = "/pic/{tx}", produces = arrayOf(MediaType.IMAGE_PNG_VALUE))
+    val allPics = HashMap<String,Picture>()
+
+
+
+    @GetMapping(value = "/pic/{tx}.png", produces = arrayOf(MediaType.IMAGE_PNG_VALUE))
     fun pic(@RequestParam(value = "size", defaultValue = "5") size: String, @PathVariable("tx") tx: String): ByteArray {
 
-        val p=buffer.get(tx)
-        if(p!=null){
-            return p
-        }
 
         var iSize = 5
         if (size.matches("-?\\d+(\\.\\d+)?".toRegex())) {
@@ -40,10 +39,10 @@ class PictureController {
         }
 
 
-
-        val picMap = getPics().associateBy({ it.tx }, { it })
-
-        val currentPic = picMap.get(tx)
+        if(allPics.isEmpty()||allPics.get(tx)==null) {
+            allPics.putAll(getPics().associateBy({ it.tx }, { it }))
+        }
+        val currentPic = allPics.get(tx)
 
         if (currentPic == null) {
             throw PicNotFoundException("not found")
@@ -54,7 +53,6 @@ class PictureController {
         ImageIO.write(image, "png", outputStream)
 
         val byteArray=outputStream.toByteArray()
-        buffer.put(tx,byteArray)
         return byteArray
     }
 
